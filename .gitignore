@@ -1,0 +1,19 @@
+# Build
+build/
+
+# Configurações locais
+*.env
+*.local
+
+# Backup de bancos
+*.dump
+*.bak
+
+# IDEs
+.vscode/
+.idea/
+.vscode/
+
+# Logs
+*.log
+EOF
