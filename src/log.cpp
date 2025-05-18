@@ -1,6 +1,8 @@
 #include "../include/log.h"
 #include <iostream>
 #include <ctime>
+#include <thread>
+#include <mutex>
 
 logger::logger(const std::string& filename)
 {
@@ -40,7 +42,7 @@ void logger::log(log_level level, const std::string& message)
     
     time_t now = time(0);
     tm* local_time = localtime(&now);
-    char time_buffer[128];
+    char time_buffer[24];
     strftime(time_buffer,
              sizeof(time_buffer),
              "%Y-%m-%d %H:%M:%S", local_time);
@@ -55,13 +57,13 @@ void logger::log(log_level level, const std::string& message)
     log_file.flush();
 }
 
-int main()
-{
-    logger app_log("log.txt");
-    app_log.log(log_level::INFO, "This is an info message.");
-    app_log.log(log_level::ERROR, "This is an error message.");
-    app_log.log(log_level::DEBUG, "This is a debug message.");
-    app_log.log(log_level::WARNING, "This is a warning message.");
-    app_log.log(log_level::CRITICAL, "This is a critical message.");
-    return 0;
-}
+// int main()
+// {
+//     logger app_log("log.txt");
+//     app_log.log(log_level::INFO, "This is an info message.");
+//     app_log.log(log_level::ERROR, "This is an error message.");
+//     app_log.log(log_level::DEBUG, "This is a debug message.");
+//     app_log.log(log_level::WARNING, "This is a warning message.");
+//     app_log.log(log_level::CRITICAL, "This is a critical message.");
+//     return 0;
+// }

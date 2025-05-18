@@ -1,5 +1,6 @@
 #ifndef CONFIG_H
 #define CONFIG_H
+#include "../include/log.h"
 #include <string>
 #include <unordered_map>
 

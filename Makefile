@@ -63,3 +63,5 @@ deps:
 		liboath-dev
 
 .PHONY: all clean prepare deps install
+
+# g++ user.cpp log.cpp app.cpp -o user -luuid

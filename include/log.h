@@ -6,15 +6,17 @@
 #include <fstream>
 #include <sstream>
 #include <mutex>
+#include <thread>
 
-enum class log_level : uint8_t
+enum class log_level : uint8_t 
 {
-    DEBUG = 0,
+    DEBUG,
     INFO,
     WARNING,
     ERROR,
     CRITICAL,
 };
+
 class logger
 {
     protected:
