@@ -4,19 +4,19 @@
 #include <fstream>
 #include <algorithm>
 
-logger config_logger("../logs/genpass.log");
+Logger config_logger("../logs/genpass.log");
 
-config::config()
+Config::Config()
 {
     config_logger.log(log_level::INFO, "Config constructor called.");
 }
 
-config::~config()
+Config::~Config()
 {
     config_logger.log(log_level::INFO, "Config destructor called.");
 }
 
-void config::load(const std::string& filename)
+void Config::load(const std::string& filename)
 {
     if(filename.empty())
     {
@@ -39,7 +39,6 @@ void config::load(const std::string& filename)
         
         if (line.empty() || line[0] == '#') continue;
         std::string buffer[64];
-        
-        
+        // Continue development (unfinished)
     }
 }

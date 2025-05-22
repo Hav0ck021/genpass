@@ -17,14 +17,14 @@ enum class log_level : uint8_t
     CRITICAL,
 };
 
-class logger
+class Logger
 {
     protected:
         // Check problematic code to race condition resolution by using mutex.
         std::mutex log_mutex;
     public:
-        logger(const std::string& filename);
-        ~logger();
+        Logger(const std::string& filename);
+        ~Logger();
         void log(log_level level, const std::string& message);
     private:
         std::ofstream log_file;

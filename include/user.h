@@ -3,7 +3,7 @@
 #include <uuid/uuid.h>
 #include <iostream>
 
-class user
+class User
 {
     private:
         uuid_t uuid;
@@ -12,8 +12,8 @@ class user
         std::string email;
         std::string pass;
     public:
-        user();
-        ~user();
+        User();
+        ~User();
         void input_data();
         void output_data();
         const std::string get_uuid();

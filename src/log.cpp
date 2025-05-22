@@ -4,7 +4,7 @@
 #include <thread>
 #include <mutex>
 
-logger::logger(const std::string& filename)
+Logger::Logger(const std::string& filename)
 {
     log_file.open(filename, std::ios::app);
     if (!log_file.is_open()) {
@@ -12,12 +12,12 @@ logger::logger(const std::string& filename)
     }
 }
 
-logger::~logger()
+Logger::~Logger()
 {
     log_file.close();
 }
 
-std::string logger::level_to_string(log_level level)
+std::string Logger::level_to_string(log_level level)
 {
     switch (level)
     {
@@ -30,7 +30,7 @@ std::string logger::level_to_string(log_level level)
     }
 }
 
-void logger::log(log_level level, const std::string& message)
+void Logger::log(log_level level, const std::string& message)
 {
     if (!log_file.is_open())
     {
@@ -56,14 +56,3 @@ void logger::log(log_level level, const std::string& message)
     log_file << log_message.str() << '\n';
     log_file.flush();
 }
-
-// int main()
-// {
-//     logger app_log("log.txt");
-//     app_log.log(log_level::INFO, "This is an info message.");
-//     app_log.log(log_level::ERROR, "This is an error message.");
-//     app_log.log(log_level::DEBUG, "This is a debug message.");
-//     app_log.log(log_level::WARNING, "This is a warning message.");
-//     app_log.log(log_level::CRITICAL, "This is a critical message.");
-//     return 0;
-// }

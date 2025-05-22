@@ -5,19 +5,19 @@
 #include <iostream>
 #include <regex>
 
-logger app_logger("../logs/genpass.log");
+Logger app_logger("../logs/genpass.log");
 
-app::app()
+App::App()
 {
     app_logger.log(log_level::INFO, "App constructor called.");
 }
 
-app::~app()
+App::~App()
 {
     app_logger.log(log_level::INFO, "App destructor called.");
 }
 
-bool app::validate_username(const std::string& user)
+bool App::validate_username(const std::string& user)
 {
     if(user.empty())
     {
@@ -32,7 +32,7 @@ bool app::validate_username(const std::string& user)
     return true;
 }
 
-bool app::validate_email(const std::string& email)
+bool App::validate_email(const std::string& email)
 {
     if(email.empty())
     {
@@ -53,7 +53,7 @@ bool app::validate_email(const std::string& email)
     return std::regex_match(email, pattern);
 }
 
-bool app::validate_username(const std::string& username)
+bool App::validate_username(const std::string& username)
 {
     if(username.empty())
     {
@@ -68,7 +68,7 @@ bool app::validate_username(const std::string& username)
     return true;
 }
 
-bool app::validate_password(const std::string& password)
+bool App::validate_password(const std::string& password)
 {
     if(password.empty())
     {
@@ -88,7 +88,7 @@ bool app::validate_password(const std::string& password)
     return true;
 }
 
-uint8_t app::validate_password_strength(const std::string& password)
+uint8_t App::validate_password_strength(const std::string& password)
 {
     if(password.length() < 8)
     {
@@ -105,7 +105,7 @@ uint8_t app::validate_password_strength(const std::string& password)
     return 1;
 }
 
-uint8_t app::validate_password_length(const std::string& password)
+uint8_t App::validate_password_length(const std::string& password)
 {
     if(password.length() < 8)
     {
@@ -114,9 +114,9 @@ uint8_t app::validate_password_length(const std::string& password)
     return 1;
 }
 
-void app::run()
+void App::run()
 {
-    user u;
+    User u;
     u.input_data();
     u.output_data();
 }
