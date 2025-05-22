@@ -12,6 +12,7 @@ class app
         app();
         ~app();
         void run();
+        static bool validate_username(const std::string& user);
         static bool validate_email(const std::string& email);
         static bool validate_username(const std::string& username);
         static bool validate_password(const std::string& password);

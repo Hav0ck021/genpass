@@ -17,6 +17,21 @@ app::~app()
     app_logger.log(log_level::INFO, "App destructor called.");
 }
 
+bool app::validate_username(const std::string& user)
+{
+    if(user.empty())
+    {
+        app_logger.log(log_level::ERROR, "Username cannot be empty.\n");
+        exit(1);
+    }
+    if(user.length() < 8)
+    {
+        app_logger.log(log_level::ERROR, "Username is too short.\n");
+        exit(1);
+    }
+    return true;
+}
+
 bool app::validate_email(const std::string& email)
 {
     if(email.empty())

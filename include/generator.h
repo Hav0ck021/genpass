@@ -1,4 +1,3 @@
-#pragma once
 #ifndef GENPASS_GENERATOR_H
 #define GENPASS_GENERATOR_H
 #include <iostream>

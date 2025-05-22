@@ -1,43 +1,21 @@
+#ifndef AUTH_H
+#define AUTH_H
+#include <../include/log.h>
+#include <../include/user.h>
+#include <../include/app.h>
 #include <bits/stdc++.h>
 #include <iostream>
+#include <string>
 
-void criarSenha(){
-
-}
-
-/** Função responsável pela encriptação da senha inserida
- * pelo usuário. **/
-void EncryptPassword(){
-
-}
-
-/** Função responsável pela decriptação da senha inserida
- * pelo usuário, revelando a mensagem original. **/
-void DecryptPassword(){
-
-}
-
-bool verificarSenha(const char *pass) {
-    char realPass[] = "admin";
-    if (strcmp(pass, realPass) == 0){
-        return true;
-    }
-    return false;
-}
-
-int tentativaSenha(){
-    char pass[17];
-    int i = 3;
-    std::cout << "\nSenha Incorreta!\nVoce tem " << i << "tentativas para inserir a senha correta.\n\n";
-
-    while (i > 0) {
-        std::cin >> pass;
-
-        if (verificarSenha(pass)) {
-            return iniciarGenPass();
-        }
-        i--;
-        std::cout << "\nSenha Incorreta!\nVoce tem " << i << " tentativas para inserir a senha correta.\n\n";
-    }
-    return fecharGenPass();
-}
+class auth
+{
+    private:
+        static std::string encrypt_password(const std::string& password);
+        static std::string decrypt_password(const std::string& password);
+    public:
+        auth();
+        ~auth();
+        static bool create_password(const std::string& pass);
+        static std::string reset_password(const std::string& pass);
+};
+#endif // AUTH_H
