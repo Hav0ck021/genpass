@@ -1,8 +1,8 @@
 #ifndef AUTH_H
 #define AUTH_H
-#include <../include/log.h>
-#include <../include/user.h>
-#include <../include/app.h>
+#include "../include/log.h"
+#include "../include/user.h"
+#include "../include/app.h"
 #include <bits/stdc++.h>
 #include <iostream>
 #include <string>

@@ -2,7 +2,7 @@
 #define DB_H
 
 #include <iostream>
-#include <pqxx>
+#include <pqxx/pqxx>
 
 using namespace std;
 
