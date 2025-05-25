@@ -8,27 +8,27 @@ Logger config_logger("../logs/genpass.log");
 
 Config::Config()
 {
-    config_logger.log(log_level::INFO, "Config constructor called.");
+    config_logger.log(Log_level::INFO, "Config constructor called.");
 }
 
 Config::~Config()
 {
-    config_logger.log(log_level::INFO, "Config destructor called.");
+    config_logger.log(Log_level::INFO, "Config destructor called.");
 }
 
 void Config::load(const std::string& filename)
 {
     if(filename.empty())
     {
-        config_logger.log(log_level::INFO, "Creating a new config file: " + filename + '.');
+        config_logger.log(Log_level::INFO, "Creating a new config file: " + filename + '.');
         std::ofstream config_file(filename);
-        config_logger.log(log_level::INFO, "Config file created.");
+        config_logger.log(Log_level::INFO, "Config file created.");
     }
 
     std::ifstream config_file(filename);
     if(!config_file.is_open())
     {
-        config_logger.log(log_level::ERROR, "Error opening config file: " + filename);
+        config_logger.log(Log_level::ERROR, "Error opening config file: " + filename);
         exit(1);
     }
 

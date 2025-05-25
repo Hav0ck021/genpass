@@ -1,10 +1,10 @@
 #ifndef MENU_H
 #define MENU_H
-#include "../src/generator.cpp"
-#include "../src/auth.cpp"
-#include "../src/app.cpp"
-#include "../src/log.cpp"
-#include "../src/user.cpp"
+#include "../include/generator.h"
+#include "../include/auth.h"
+#include "../include/app.h"
+#include "../include/log.h"
+#include "../include/user.h"
 #include <iostream>
 
 class Menu
@@ -13,6 +13,8 @@ class Menu
         Menu();
         ~Menu();
         void init_genpass();
+        void menu();
+        void help();
         void menu_options();
         void close_genpass();
 };

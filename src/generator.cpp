@@ -4,16 +4,16 @@
 #include <random>
 #include <algorithm>
 
-logger generator_logger("user.log");
+Logger generator_logger("logs/genpass.log");
 
 generator::generator()
 {
-    generator_logger.log(log_level::INFO, "Generator has been instanced.\n");
+    generator_logger.log(Log_level::INFO, "Generator has been instanced.\n");
 }
 
 generator::~generator()
 {
-    generator_logger.log(log_level::INFO, "Generator has been removed.\n");
+    generator_logger.log(Log_level::INFO, "Generator has been removed.\n");
 }
 
 const int generator::get_size_pass()
@@ -76,4 +76,16 @@ void generator::generate_pass(int &size_pass)
     std::shuffle(password.begin(), password.end(), gen);
      
     std::cout << "Password: " << generator::get_password() << '\n';
+}
+
+int main()
+{
+    generator gen;
+    int size_pass = 12; // Default size
+    gen.set_size_pass(size_pass);
+    
+    std::cout << "Generating password of size " << gen.get_size_pass() << "...\n";
+    gen.generate_pass(size_pass);
+    
+    return 0;
 }

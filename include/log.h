@@ -8,7 +8,7 @@
 #include <mutex>
 #include <thread>
 
-enum class log_level : uint8_t 
+enum class Log_level : uint8_t 
 {
     DEBUG,
     INFO,
@@ -25,9 +25,9 @@ class Logger
     public:
         Logger(const std::string& filename);
         ~Logger();
-        void log(log_level level, const std::string& message);
+        void log(Log_level level, const std::string& message);
     private:
         std::ofstream log_file;
-        std::string level_to_string(log_level level);
+        std::string level_to_string(Log_level level);
 };
 #endif // LOG_H

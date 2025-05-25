@@ -9,7 +9,7 @@
 ## ✨ Funcionalidades
 
 - ✅ **Geração de senhas** com critérios customizáveis
-- 🔐 **Criptografia AES-256** + Argon2 para senha mestra
+- 🔐 **Criptografia AES-256** + Argon2 (Libsodium) para senha mestra
 - 💾 **Armazenamento local seguro** (PostgreSQL)
 - 🔍 **Busca inteligente** por serviços/usuários
 - 📊 **Auditoria de segurança** (força de senha, duplicatas)
@@ -18,21 +18,32 @@
 
 ```bash
 GenPass/
+├── config/       # Arquivos de configuração da aplicação
+├── docs/         # Documentações
 ├── include/      # Headers (.hpp)
+├── logs/         # Logs gerados
 ├── src/          # Implementação (.cpp)
 ├── tests/        # Testes unitários
-├── config/       # Arquivos de configuração
 └── Makefile      # Sistema de build
 ```
 
 ## 🤝 Contribuição
 Faça um fork do projeto
 
-Crie sua branch (git checkout -b feature/foo)
+Crie sua branch
+```bash
+git checkout -b feature/foo
+```
 
-Commit suas mudanças (git commit -am 'Add foo')
+Commit suas mudanças
+```bash
+git commit -am 'Add foo'
+```
 
-Push para a branch (git push origin feature/foo)
+Push para a branch
+```bash
+git push origin feature/foo
+```
 
 Abra um Pull Request
 

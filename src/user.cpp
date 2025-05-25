@@ -4,16 +4,16 @@
 #include <uuid/uuid.h>
 #include <iostream>
 
-Logger user_logger("../logs/genpass.log");
+Logger user_logger("logs/genpass.log");
 
 User::User()
 {
-    user_logger.log(log_level::INFO, "New user has been created.\n");
+    user_logger.log(Log_level::INFO, "New user has been created.");
 }
 
 User::~User()
 {
-    user_logger.log(log_level::INFO, "New user has been removed.\n");
+    user_logger.log(Log_level::INFO, "New user has been removed.");
 }
 
 const std::string User::get_uuid()
@@ -47,7 +47,7 @@ void User::set_username(const std::string& n)
 {
     if(n.empty())
     {
-        user_logger.log(log_level::ERROR, "Username cannot be empty.\n");
+        user_logger.log(Log_level::ERROR, "Username cannot be empty.");
         exit(1);
     }
     username = n;
@@ -57,7 +57,7 @@ void User::set_email(const std::string& e)
 {
     if(!App::validate_email(e))
     {
-        user_logger.log(log_level::ERROR, "Email is not valid.\n");
+        user_logger.log(Log_level::ERROR, "Email is not valid.");
         exit(1);
     }
     email = e;
@@ -77,7 +77,7 @@ void User::set_pass(const std::string& p)
 {
     if(!App::validate_password(p))
     {
-        user_logger.log(log_level::ERROR, "Password is not valid.\n");
+        user_logger.log(Log_level::ERROR, "Password is not valid.");
         exit(1);
     }
     pass = p;
@@ -102,8 +102,8 @@ void User::input_data()
     User::set_pass(pass);
 
     set_uuid();
-    user_logger.log(log_level::INFO, "UUID generated: " + get_uuid() + " from user: " + username + '\n');
-    user_logger.log(log_level::INFO, "User: " + User::get_username() + " data has been set.\n");
+    user_logger.log(Log_level::INFO, "UUID generated: " + get_uuid() + " from user: " + username + '.');
+    user_logger.log(Log_level::INFO, "User: " + User::get_username() + " data has been set.");
 }
 
 void User::output_data()

@@ -4,20 +4,23 @@
 #include <iostream>
 #include <pqxx/pqxx>
 
-using namespace std;
-
 class Database
 {
     private:
-
+        pqxx::connection *conn;
+        std::string db_name;
+        std::string user;
+        std::string password;
+        std::string host;
+        std::string port;
     public:
         Database(const char *filename);
         ~Database();
-        // Function to create table to users (SQL)
-        // Function to create table to credentials (NoSQL)
-        // Function to create table to settings (NoSQL)
-        // Function to consult table to users (SQL)
-        // Function to consult table to credentials (NoSQL)
-        // Function to consult table to settings (NoSQL)
+        void create_table_user();
+        void create_table_credentials();
+        void create_table_settings();
+        void consult_table_user();
+        void consult_table_credentials();
+        void consult_table_settings();
 };
 #endif //DB_H

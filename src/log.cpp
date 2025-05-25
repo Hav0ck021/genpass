@@ -17,20 +17,20 @@ Logger::~Logger()
     log_file.close();
 }
 
-std::string Logger::level_to_string(log_level level)
+std::string Logger::level_to_string(Log_level level)
 {
     switch (level)
     {
-        case log_level::DEBUG: return "DEBUG";
-        case log_level::INFO: return "INFO";
-        case log_level::WARNING: return "WARNING";
-        case log_level::ERROR: return "ERROR";
-        case log_level::CRITICAL: return "CRITICAL";
+        case Log_level::DEBUG: return "DEBUG";
+        case Log_level::INFO: return "INFO";
+        case Log_level::WARNING: return "WARNING";
+        case Log_level::ERROR: return "ERROR";
+        case Log_level::CRITICAL: return "CRITICAL";
         default: return "UNKNOWN";
     }
 }
 
-void Logger::log(log_level level, const std::string& message)
+void Logger::log(Log_level level, const std::string& message)
 {
     if (!log_file.is_open())
     {
@@ -51,8 +51,7 @@ void Logger::log(log_level level, const std::string& message)
     log_message << "[" <<  time_buffer << "] - "
                 << level_to_string(level) << ": "
                 << message; 
-
-    std::cout << log_message.str() << '\n';
+                
     log_file << log_message.str() << '\n';
     log_file.flush();
 }
