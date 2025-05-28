@@ -77,15 +77,3 @@ void generator::generate_pass(int &size_pass)
      
     std::cout << "Password: " << generator::get_password() << '\n';
 }
-
-int main()
-{
-    generator gen;
-    int size_pass = 12; // Default size
-    gen.set_size_pass(size_pass);
-    
-    std::cout << "Generating password of size " << gen.get_size_pass() << "...\n";
-    gen.generate_pass(size_pass);
-    
-    return 0;
-}

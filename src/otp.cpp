@@ -1,5 +1,6 @@
 #include "../include/otp.h"
 #include "../include/log.h"
+#include "../include/db.h"
 
 Logger otp_logger("../logs/genpass.log");
 
@@ -13,7 +14,19 @@ OTP::~OTP()
     otp_logger.log(Log_level::INFO, "OTP destructor called.");
 }
 
-std::string generate_random_base32_secret(int length = OTP_SECRET_LENGTH)
+bool OTP::otp_is_activated(const std::string &username)
+{
+    // Revision of this function.
+    otp_logger.log(Log_level::INFO, "OTP activation check called.");
+    if(!Database::get_otp_status(username))
+    {
+        otp_logger.log(Log_level::WARNING, "OTP is not activated for the current user.");
+        return false;
+    }
+    return true;
+}
+
+std::string OTP::generate_random_base32_secret(int length = OTP_SECRET_LENGTH)
 {
     // Development of this function is in progress.
 }

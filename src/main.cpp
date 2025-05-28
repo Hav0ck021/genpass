@@ -8,10 +8,9 @@
 #include <iostream>
 #include <string>
 
-void main(int argc, char **argv)
+int main(int argc, char **argv)
 {
     Menu menu;
-
     if(argc > 1)
     { 
         if(std::string(argv[1]) == "--help" || std::string(argv[1]) == "-h")
@@ -36,5 +35,5 @@ void main(int argc, char **argv)
             exit(1);
         }
     }
-    exit(0);
+    return 0;
 }

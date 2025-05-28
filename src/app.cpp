@@ -1,3 +1,4 @@
+#include "../include/auth.h"
 #include "../include/app.h"
 #include "../include/log.h"
 #include "../include/user.h"
@@ -106,36 +107,48 @@ void App::run()
     u.output_data();
 }
 
-int main()
+bool App::init_session_vault(const std::string& username, const std::string& password)
 {
-    App app;
-
-    // Testes para validate_username
-    std::cout << "Teste validate_username:\n";
-    std::cout << "Usuário válido: " << app.validate_username("usuario123") << "\n";
-    // std::cout << "Usuário vazio: " << app.validate_username("") << "\n"; // Deve falhar
-    // std::cout << "Usuário curto: " << app.validate_username("abc") << "\n"; // Deve falhar
-
-    // Testes para validate_email
-    std::cout << "\nTeste validate_email:\n";
-    std::cout << "Email válido: " << app.validate_email("teste@email.com") << "\n";
-    // std::cout << "Email vazio: " << app.validate_email("") << "\n"; // Deve falhar
-    // std::cout << "Email inválido: " << app.validate_email("testeemail.com") << "\n"; // Deve falhar
-
-    // Testes para validate_password_length
-    std::cout << "\nTeste validate_password_length:\n";
-    std::cout << "Senha longa: " << app.validate_password("12345678") << "\n";
-    std::cout << "Senha curta: " << app.validate_password("123") << "\n";
-
-    // Testes para validate_password_strength
-    std::cout << "\nTeste validate_password_strength:\n";
-    std::cout << "Senha forte: " << app.validate_password("Abcdef1!") << "\n";
-    std::cout << "Senha fraca: " << app.validate_password("abcdefghi") << "\n";
-
-    // Testes para validate_password
-    std::cout << "\nTeste validate_password:\n";
-    std::cout << "Senha válida: " << app.validate_password("Senha123!") << "\n";
-    // std::cout << "Senha vazia: " << app.validate_password("") << "\n"; // Deve falhar
-
-    return 0;
+    // Development of this function is in progress. Must be verify token session.
+    if(!Auth::login(username, password))
+    {
+        app_logger.log(Log_level::ERROR, "Invalid credentials for user: " + username);
+        return false;
+    }
+    app_logger.log(Log_level::INFO, "User: " + username + " logged in successfully.");
+    return true;
 }
+
+// int main()
+// {
+//     App app;
+
+//     // Testes para validate_username
+//     std::cout << "Teste validate_username:\n";
+//     std::cout << "Usuário válido: " << app.validate_username("usuario123") << "\n";
+//     // std::cout << "Usuário vazio: " << app.validate_username("") << "\n"; // Deve falhar
+//     // std::cout << "Usuário curto: " << app.validate_username("abc") << "\n"; // Deve falhar
+
+//     // Testes para validate_email
+//     std::cout << "\nTeste validate_email:\n";
+//     std::cout << "Email válido: " << app.validate_email("teste@email.com") << "\n";
+//     // std::cout << "Email vazio: " << app.validate_email("") << "\n"; // Deve falhar
+//     // std::cout << "Email inválido: " << app.validate_email("testeemail.com") << "\n"; // Deve falhar
+
+//     // Testes para validate_password_length
+//     std::cout << "\nTeste validate_password_length:\n";
+//     std::cout << "Senha longa: " << app.validate_password("12345678") << "\n";
+//     std::cout << "Senha curta: " << app.validate_password("123") << "\n";
+
+//     // Testes para validate_password_strength
+//     std::cout << "\nTeste validate_password_strength:\n";
+//     std::cout << "Senha forte: " << app.validate_password("Abcdef1!") << "\n";
+//     std::cout << "Senha fraca: " << app.validate_password("abcdefghi") << "\n";
+
+//     // Testes para validate_password
+//     std::cout << "\nTeste validate_password:\n";
+//     std::cout << "Senha válida: " << app.validate_password("Senha123!") << "\n";
+//     // std::cout << "Senha vazia: " << app.validate_password("") << "\n"; // Deve falhar
+
+//     return 0;
+// }

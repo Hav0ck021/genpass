@@ -15,6 +15,7 @@ class App
         static bool validate_email(const std::string& email);
         static bool validate_username(const std::string& user);
         static bool validate_password(const std::string& password);
+        static bool init_session_vault(const std::string& username, const std::string& password);
 };
 
 #endif // APP_H

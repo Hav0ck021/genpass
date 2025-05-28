@@ -10,8 +10,6 @@
 class Crypto
 {
     private:
-        std::string encrypt_password(char *password, const unsigned char *otp);
-        std::string decrypt_password(char *passwd, char *hashed_password, const unsigned char *otp);
         static std::string generate_salt();
         static std::string generate_hash(const std::string& password, const std::string& salt);
     public:
@@ -19,5 +17,7 @@ class Crypto
         ~Crypto();
         static bool create_password(User new_user, const std::string& new_passwd);
         static std::string reset_password(const std::string& pass);
+        static std::string encrypt_password(char *password, const unsigned char *otp);
+        static std::string decrypt_password(char *passwd, char *hashed_password, const unsigned char *otp);
 };
 #endif // CRYPTO_H

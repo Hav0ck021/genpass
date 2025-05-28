@@ -19,6 +19,7 @@ class OTP
     public:
         OTP();
         ~OTP();
+        static bool otp_is_activated(const std::string &username);
         static std::string generate_random_base32_secret(int length = OTP_SECRET_LENGTH);
         static std::string generate_hotp(const std::string& base32_secret, 
             uint64_t counter, 
