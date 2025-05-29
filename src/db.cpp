@@ -31,6 +31,7 @@ Database::Database(const char *filename)
 Database::~Database()
 {
     db_logger.log(Log_level::INFO, "Database destructor called.");
+    // Verifiy this disconnection later.
     conn->disconnect();
     delete conn;
 }
@@ -291,8 +292,7 @@ std::string Database::get_hash_passwd(const std::string &username)
     }
 }
 
-pqxx::result Database::get_credentials(const std::string &service_name,
-                                        const std::string &username)
+pqxx::result Database::get_credentials(const std::string &service_name, const std::string &username)
 {
     if(!conn->is_open())
     {

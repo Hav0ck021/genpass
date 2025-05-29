@@ -2,7 +2,7 @@ to compile in your system, must have this packages: util-linux libsodium-dev and
 
 you can install using `apt`
 ```bash
-sudo apt install util-linux libsodium-dev libpqxx
+sudo apt install util-linux libsodium-dev libpqxx uuid-dev
 ```
 
 but i recommend download stable versions of packages

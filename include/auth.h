@@ -16,8 +16,7 @@ class Auth
         Auth();
         ~Auth();
         // Login
-        static bool login(const std::string &username,
-                   const std::string &password);
+        static bool login(const std::string &username, const std::string &password);
         void logout();
         static bool compare_passwd_decrypted_passwd(const std::string &password, const std::string &hashed_password, const unsigned char *otp);
         std::string generate_session_token(size_t lenght);
