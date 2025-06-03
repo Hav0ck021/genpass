@@ -4,7 +4,7 @@
 #include <uuid/uuid.h>
 #include <iostream>
 
-Logger user_logger("logs/genpass.log");
+Logger User::user_logger;
 
 User::User()
 {

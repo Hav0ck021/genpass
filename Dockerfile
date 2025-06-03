@@ -1,0 +1,1 @@
+# Dockerfile to compile GenPass and create database in PostgreSQL image

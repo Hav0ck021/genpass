@@ -1,12 +1,13 @@
 #ifndef DB_H
 #define DB_H
-
+#include "../include/log.h"
 #include <iostream>
 #include <pqxx/pqxx>
 
 class Database
 {
     private:
+        static Logger db_logger;
         pqxx::connection *conn;
         std::string db_name;
         std::string user;

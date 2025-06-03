@@ -6,7 +6,9 @@
 #include <iostream>
 #include <string>
 
-Logger crypto_logger("../logs/genpass.log");
+const std::string BASE64_URL_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+
+Logger Crypto::crypto_logger;
 
 Crypto::Crypto()
 {
@@ -16,6 +18,32 @@ Crypto::Crypto()
 Crypto::~Crypto()
 {
     crypto_logger.log(Log_level::INFO, "Crypto destructor called.");
+}
+
+bool Crypto::create_password(User new_user, const std::string& new_passwd)
+{
+    if(new_passwd.length() < 8)
+    {
+        crypto_logger.log(Log_level::ERROR, "Password must be at least 8 characters long.");
+        return false;
+    }
+    new_user.set_pass(new_passwd);
+    return true;
+}
+
+std::string Crypto::reset_password(const std::string& pass)
+{
+    return "";
+}
+
+std::string Crypto::generate_salt()
+{
+    return "";
+}
+
+std::string Crypto::generate_hash(const std::string& password, const std::string& salt)
+{
+    return "";
 }
 
 std::string Crypto::encrypt_password(char *passwd, const unsigned char *otp)
@@ -71,28 +99,12 @@ std::string Crypto::decrypt_password(char *passwd, char *hash_passwd, const unsi
     return decrypted_password;
 }
 
-bool Crypto::create_password(User new_user, const std::string& new_passwd)
+std::string Crypto::encode(size_t lenght)
 {
-    if(new_passwd.length() < 8)
-    {
-        crypto_logger.log(Log_level::ERROR, "Password must be at least 8 characters long.");
-        return false;
-    }
-    new_user.set_pass(new_passwd);
-    return true;
+    return "";   
 }
 
-std::string Crypto::reset_password(const std::string& pass)
+std::string Crypto::decode(size_t lenght)
 {
-    // Development of this function is in progress.
-}
-
-std::string Crypto::generate_salt()
-{
-    // Development of this function is in progress.
-}
-
-std::string Crypto::generate_hash(const std::string& password, const std::string& salt)
-{
-    // Development of this function is in progress.
+    return "";
 }

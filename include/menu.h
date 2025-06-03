@@ -9,6 +9,8 @@
 
 class Menu
 {
+    private:
+        static Logger menu_logger;
     public:
         Menu();
         ~Menu();

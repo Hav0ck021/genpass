@@ -1,25 +1,36 @@
 #include "../include/log.h"
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <iostream>
 #include <ctime>
 #include <thread>
 #include <mutex>
 
-Logger::Logger(const std::string& filename)
+Logger::Logger()
 {
-    log_file.open(filename, std::ios::app);
+    struct stat st{};
+    if (stat(LOG_DIR.c_str(), &st) == -1) {
+        if (mkdir(LOG_DIR.c_str(), 0755) != 0) {
+            std::cerr << "Failed to create log directory: " << LOG_DIR << '\n';
+            perror("mkdir");
+        }
+    }
+    log_file.open(LOG_FILE_PATH.c_str(), std::ios::app);
     if (!log_file.is_open()) {
-        std::cerr << "Error opening log file: " << filename << '\n';
+        std::cerr << "Error opening default log file: " << LOG_FILE_PATH << '\n';
     }
 }
 
 Logger::~Logger()
 {
+    std::lock_guard<std::mutex> lock(log_mutex);
+    log_file.flush();
     log_file.close();
 }
 
 std::string Logger::level_to_string(Log_level level)
 {
-    switch (level)
+    switch(level)
     {
         case Log_level::DEBUG: return "DEBUG";
         case Log_level::INFO: return "INFO";
@@ -32,7 +43,7 @@ std::string Logger::level_to_string(Log_level level)
 
 void Logger::log(Log_level level, const std::string& message)
 {
-    if (!log_file.is_open())
+    if(!log_file.is_open())
     {
         std::cerr << "Log file is not open. Can't save log message.\n";
         exit(1);

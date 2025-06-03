@@ -4,43 +4,43 @@
 #include <random>
 #include <algorithm>
 
-Logger generator_logger("logs/genpass.log");
+Logger Generator::generator_logger;
 
-generator::generator()
+Generator::Generator()
 {
-    generator_logger.log(Log_level::INFO, "Generator has been instanced.\n");
+    generator_logger.log(Log_level::INFO, "Generator has been instanced.");
 }
 
-generator::~generator()
+Generator::~Generator()
 {
-    generator_logger.log(Log_level::INFO, "Generator has been removed.\n");
+    generator_logger.log(Log_level::INFO, "Generator has been removed.");
 }
 
-const int generator::get_size_pass()
+const int Generator::get_size_pass()
 {
     return size_pass;
 }
 
-void generator::set_size_pass(int &size)
+void Generator::set_size_pass(int &size)
 {
-    while(size < 4 || size > 32) {
+    while(size < 4 || size > 50) {
         std::cout << "Invalid size!\n";
         std::cin >> size;
     }
     size_pass = size;
 }
 
-const std::string generator::get_password()
+const std::string Generator::get_password()
 {
     return password;
 }
 
-void generator::set_password(const std::string pass)
+void Generator::set_password(const std::string pass)
 {
     password = pass;
 }
 
-void generator::generate_pass(int &size_pass)
+void Generator::generate_pass(int &size_pass)
 {
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -51,7 +51,7 @@ void generator::generate_pass(int &size_pass)
     std::uniform_int_distribution<> dist_spec(0, special.size() - 1);
     std::uniform_int_distribution<> dist_type(0, 3);
     
-    generator::password.clear();
+    Generator::password.clear();
     
     while(size_pass > 0)
     {
@@ -75,5 +75,5 @@ void generator::generate_pass(int &size_pass)
     }
     std::shuffle(password.begin(), password.end(), gen);
      
-    std::cout << "Password: " << generator::get_password() << '\n';
+    std::cout << "Password: " << Generator::get_password() << '\n';
 }

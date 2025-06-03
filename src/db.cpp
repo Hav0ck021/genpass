@@ -1,9 +1,11 @@
 #include "../include/user.h"
-#include "../include/app.h"
+// #include "../include/app.h"
 #include "../include/log.h"
 #include "../include/db.h"
+#include <pqxx/pqxx>
+#include <iostream>
 
-Logger db_logger("../logs/genpass.log");
+Logger Database::db_logger;
 
 Database::Database(const char *filename)
 {
@@ -18,13 +20,11 @@ Database::Database(const char *filename)
         else
         {
             db_logger.log(Log_level::ERROR, "Can't open database");
-            exit(1);
         }
     }
     catch (const std::exception &e)
     {
         db_logger.log(Log_level::ERROR, std::string(e.what()));
-        exit(1);
     }
 }
 
@@ -39,7 +39,7 @@ void Database::create_table_user()
 {
     if(!conn->is_open())
     {
-        db_logger.log(Log_level::ERROR, "Database connection is not open.");;
+        db_logger.log(Log_level::ERROR, "Database connection is not open.");
     }
     pqxx::work w(*conn);
     try
@@ -53,7 +53,8 @@ void Database::create_table_user()
                 password VARCHAR(255) NOT NULL,
                 email VARCHAR(100) UNIQUE NOT NULL,
                 otp_is_enabled BOOLEAN DEFAULT FALSE,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)"
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                token VARCHAR(255) DEFAULT NULL)"
         );
         w.commit();
         db_logger.log(Log_level::INFO, "Users table created successfully.");
@@ -291,6 +292,11 @@ std::string Database::get_hash_passwd(const std::string &username)
     }
 }
 
+bool Database::get_otp_status(const std::string &username)
+{
+    return true;
+}
+
 pqxx::result Database::get_credentials(const std::string &service_name,
                                         const std::string &username)
 {
@@ -332,4 +338,65 @@ pqxx::result Database::get_all_credentials(const std::string &username)
         db_logger.log(Log_level::ERROR, "Error retrieving credentials: " + std::string(e.what()));
         return pqxx::result();
     }
+}
+
+int main() {
+    // Ajuste o nome do banco de dados conforme necessário para seu ambiente
+    const char* conninfo = "dbname=testdb user=postgres password=postgres host=localhost";
+    Database db(conninfo);
+
+    // Teste criação de tabelas
+    db.create_table_user();
+    db.create_table_credentials();
+
+    // Teste inserção de usuário
+    std::string uuid = "123e4567-e89b-12d3-a456-426614174000";
+    std::string name = "Test User";
+    std::string username = "testuser";
+    std::string password = "hashedpassword";
+    std::string email = "testuser@example.com";
+    bool otp_enabled = true;
+    db.insert_user(uuid, name, username, password, email, otp_enabled);
+
+    // Teste inserção de credenciais
+    std::string service_name = "github";
+    std::string cred_username = "testuser";
+    std::string cred_password = "servicepassword";
+    db.insert_credentials(service_name, cred_username, cred_password);
+
+    // Teste atualização de usuário
+    std::string new_name = "Test User Updated";
+    db.update_user(uuid, new_name, username, password, email, otp_enabled);
+
+    // Teste atualização de credenciais
+    std::string new_password = "newservicepassword";
+    db.update_credentials(service_name, cred_username, new_password);
+
+    // Teste obtenção de usuário
+    std::string user_info = db.get_user(uuid);
+    std::cout << "User info:\n" << user_info << std::endl;
+
+    // Teste obtenção de hash da senha
+    std::string hash = db.get_hash_passwd(username);
+    std::cout << "Hash password:\n" << hash << std::endl;
+
+    // Teste status OTP
+    bool otp_status = db.get_otp_status(username);
+    std::cout << "OTP status: " << (otp_status ? "enabled" : "disabled") << std::endl;
+
+    // Teste obtenção de credenciais
+    pqxx::result creds = db.get_credentials(service_name, cred_username);
+    std::cout << "Credentials for service:\n" << db.result_to_string(creds) << std::endl;
+
+    // Teste obtenção de todas as credenciais
+    pqxx::result all_creds = db.get_all_credentials(cred_username);
+    std::cout << "All credentials for user:\n" << db.result_to_string(all_creds) << std::endl;
+
+    // Teste remoção de credenciais
+    db.delete_credentials(service_name, cred_username);
+
+    // Teste remoção de usuário
+    db.delete_user(uuid);
+
+    return 0;
 }

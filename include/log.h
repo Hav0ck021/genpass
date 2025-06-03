@@ -22,8 +22,10 @@ class Logger
     protected:
         // Check problematic code to race condition resolution by using mutex.
         std::mutex log_mutex;
+        const std::string LOG_DIR = "logs";
+        const std::string LOG_FILE_PATH = LOG_DIR + "/genpass.log";
     public:
-        Logger(const std::string& filename);
+        Logger();
         ~Logger();
         void log(Log_level level, const std::string& message);
     private:

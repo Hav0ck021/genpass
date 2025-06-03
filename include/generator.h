@@ -1,13 +1,15 @@
 #ifndef GENPASS_GENERATOR_H
 #define GENPASS_GENERATOR_H
+#include "../include/log.h"
 #include <iostream>
 #include <vector>
 #include <cstring>
 
 #define ALFA_SIZE 26
 
-class generator{
+class Generator{
     private:
+        static Logger generator_logger;
         uint8_t size_pass = 0;    
         std::string password;
         const std::string lowercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -15,8 +17,8 @@ class generator{
         const std::string numbers = "0123456789";
         const std::string special = "!@#$%^&*()_+";
     public:
-        generator();
-        ~generator();     
+        Generator();
+        ~Generator();     
         const int get_size_pass();
         void set_size_pass(int &size);
         const std::string get_password();

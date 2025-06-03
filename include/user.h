@@ -1,11 +1,13 @@
 #ifndef USER_H
 #define USER_H
+#include "../include/log.h"
 #include <uuid/uuid.h>
 #include <iostream>
 
 class User
 {
     private:
+        static Logger user_logger;
         uuid_t uuid;
         std::string name;
         std::string username;

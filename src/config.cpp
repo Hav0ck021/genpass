@@ -4,7 +4,7 @@
 #include <fstream>
 #include <algorithm>
 
-Logger config_logger("../logs/genpass.log");
+Logger Config::config_logger;
 
 Config::Config()
 {

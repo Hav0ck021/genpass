@@ -1,3 +1,5 @@
+#include "../include/generator.h"
+#include "../include/vault.h"
 #include "../include/menu.h"
 #include "../include/log.h"
 #include "../include/app.h"
@@ -5,7 +7,7 @@
 #include "../include/auth.h"
 #include <iostream>
 
-Logger menu_logger("genpass.log");
+Logger Menu::menu_logger;
 
 Menu::Menu()
 {
@@ -49,24 +51,43 @@ void Menu::menu()
     switch (choice)
     {
         case 1:
+        {
             std::cout << "Generating password..." << '\n';
+            Generator gen;
+            int size_pass;
+            std::cin >> size_pass;
+            gen.generate_pass(size_pass);
             break;
+        }
         case 2:
+        {
             close_genpass();
             break;
+        }
         case 3:
+        {
             std::cout << "Accessing password vault..." << '\n';
+            App gen_app;
+            // Remake this logic
+            gen_app.init_session_genpass("admin", "admin");
             break;
+        }
         case 4:
+        {
             std::cout << "Feature not implemented yet." << '\n';
             break;
+        }
         case 5:
+        {
             close_genpass();
             break;
+        }
         default:
+        {
             std::cout << "Invalid choice. Please try again." << '\n';
             menu();
             break;
+        }
     }
 }
 
