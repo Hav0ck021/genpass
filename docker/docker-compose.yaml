@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+    environment:
+      POSTGRES_USER: genpass
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: genpass_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  genpass:
+    build:
+      context: .
+      dockerfile: Dockerfile.genpass
+    depends_on:
+      - db
+    command: ["./genpass"]
+# This volume will persist PostgreSQL data to db service.
+volumes:
+  pgdata: 
+
+# Conecting services into a network. The genpass image will be able to connect to the db service.
+networks:
+  genpass-net:

@@ -1,67 +1,75 @@
-# Makefile para GenPass (Linux)
-# ===========================
+# Makefile for GenPass
+# Developed by: Caio Gabriel a.k.a. Hav0ck021
 
-# Configurações essenciais
+# Essentials variables
 CC = g++
 CFLAGS = -std=c++17 -Wall -Wextra -Wpedantic
-LDFLAGS = -lssl -lcrypto -lsodium -lsqlite3 -loath
+LDFLAGS = -lssl -lsodium -lpqxx -luuid
 
-# Estrutura de diretórios
+# Path structure
 SRC_DIR = src
 INC_DIR = include
+# Subdirectories for modules
+CORE_DIR = core
+DOMAIN_DIR = domain
+REPOSITORY_DIR = repository
+# Build and binary directories
 BUILD_DIR = build
 BIN_DIR = bin
 
-# Arquivos fonte (adicione os novos módulos aqui)
-SOURCES = $(wildcard $(SRC_DIR)/*.cpp)
+# Modules files
+CORE = $(wildcard $(SRC_DIR)/$(CORE_DIR)/*.cpp)
+DOMAIN = $(wildcard $(SRC_DIR)/$(DOMAIN_DIR)/*.cpp)
+REPOSITORY = $(wildcard $(SRC_DIR)/$(REPOSITORY_DIR)/*.cpp)
+# Source files
+SOURCES = $(CORE) $(DOMAIN) $(REPOSITORY)
+# Object files and target executable
 OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SOURCES))
 TARGET = $(BIN_DIR)/genpass
 
-# Regra principal
+# Steps to compile and link the project
+# Fundamental targets
 all: prepare $(TARGET)
 
 $(TARGET): $(OBJECTS)
-	@echo "🔗 Linkando executável..."
+	@echo "Linking executables..."
 	@mkdir -p $(BIN_DIR)
 	$(CC) $(OBJECTS) -o $@ $(LDFLAGS)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
-	@echo "🔨 Compilando $<..."
+	@echo "Compiling $<..."
 	@mkdir -p $(BUILD_DIR)
 	$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
-# Módulos específicos (exemplos)
-crypto: $(BUILD_DIR)/crypto.o
-	@echo "🛡  Módulo de criptografia compilado"
+# Specific modules
+crypto: $(BUILD_DIR)/$(CORE_DIR)/crypto.o
+	@echo "Módulo de criptografia compilado"
 
-database: $(BUILD_DIR)/db.o
-	@echo "💾 Módulo de banco de dados compilado"
+database: $(BUILD_DIR)/$(REPOSITORY_DIR)/db.o
+	@echo "Módulo de banco de dados compilado"
 
-# Utilitários
+# Utilities
 prepare:
 	@mkdir -p $(BUILD_DIR) $(BIN_DIR)
 
 clean:
-	@echo "🧹 Limpando build..."
+	@echo "Cleaning build..."
 	@rm -rf $(BUILD_DIR) $(BIN_DIR)
 
 install:
-	@echo "📦 Instalando no sistema..."
+	@echo "Installing to system..."
 	@sudo cp $(TARGET) /usr/local/bin
 	@sudo chmod +x /usr/local/bin/genpass
 
-# Dependências para Linux (Ubuntu/Debian)
-deps:
-	@echo "📦 Instalando dependências..."
+# Linux dependencies (Ubuntu/Debian)
+dependencies:
+	@echo "Installing dependencies..."
 	@sudo apt-get update
 	@sudo apt-get install -y \
-		libssl-dev \
+		util-linux \
 		libsodium-dev \
-		sqlite3 \
-		libsqlite3-dev \
-		oath-toolkit \
-		liboath-dev
+		libpqxx-dev \
+		uuid-dev \
+ 		libgtest-dev
 
-.PHONY: all clean prepare deps install
-
-# g++ user.cpp log.cpp app.cpp -o user -luuid
+.PHONY: all clean prepare dependencies install

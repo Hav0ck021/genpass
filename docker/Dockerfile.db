@@ -1,0 +1,15 @@
+# Image 2 - PostgreSQL with a user and database for GenPass
+FROM ubuntu:22.04 AS postgres
+
+# Install PostgreSQL and necessary packages
+RUN apt-get update && apt-get install -y \
+    postgresql \
+    postgresql-contrib \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create a user and database
+RUN service postgresql start && \
+    su - postgres -c "createuser --superuser genpass_user" && \
+    su - postgres -c "createdb genpass_db" && \
+    su - postgres -c "psql -c \"ALTER USER genpass_user WITH PASSWORD 'genpass_password';\""
+    

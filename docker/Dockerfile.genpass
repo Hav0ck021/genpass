@@ -1,0 +1,19 @@
+# Image 1 - Ubuntu 22.04 with necessary packages to compile GenPass
+FROM ubuntu:22.04 AS builder
+
+# Install necessary packages and update all packages to latest versions
+RUN apt-get update && apt-get upgrade -y && \
+apt-get install -y gcc make cmake util-linux libsodium-dev libpqxx uuid-dev libgtest-dev && \
+rm -rf /var/lib/apt/lists/*
+
+# Set the working directory
+WORKDIR /usr/src/genpass
+
+# Copy the source code to the container
+COPY . /usr/src/genpass/
+
+# Copy source code and compile
+COPY . /usr/src/genpass
+WORKDIR /usr/src/genpass
+RUN make
+CMD ["genpass"]
